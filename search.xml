@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>当你计算出了&lt;&lt;三体&gt;&gt;的真实评分</title>
+      <link href="/posts/d7d9.html"/>
+      <url>/posts/d7d9.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="最终结果"><a href="#最终结果" class="headerlink" title="最终结果"></a>最终结果</h1><p>话不多说，先上图<br><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/imagesimage-20230103133859509.png" alt="image-20230103133859509"></p><p>在这里先佩服一下<em>鼠鼠</em> 控评（锁分）能力，一部<strong>6.3</strong>的烂作都能控到<strong>8.2</strong>。</p><h1 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h1><p>该程序很简单，只有两个函数，调用两个第三方包<code>pymongo</code>和<code>requests</code></p><p><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301031346994.png" alt="获取所有短评"></p><p><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301031345059.png" alt="计算真实评分"></p><p><code>get_short_all()</code>这个函数有点计算机基础的都看得懂，重点在<code>real_score()</code>这个函数上。你们可以看到，我在表示<code>sum</code>和<code>dala.__len__()</code>时用的不是常见的<code>int</code>或者<code>float</code>，而是用了<code>decimal.Decimal</code>这个数据格式。这其实是有原因的，我们来看接下来这段code。</p><p><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301031349839.png" alt="image-20230103134900540"></p><p>这其实涉及到float的精度丢失问题，即计算机无法准确的用二进制表示一些小数，就像我们没法用十进制准确的表示</p><script type="math/tex; mode=display">\frac 1 3 和\frac 2 3 以及\frac 1 9 等</script><p>一样，而采用decimal就不会有这样的问题（虽然速度会慢很多）</p><h2 id="代码自取"><a href="#代码自取" class="headerlink" title="代码自取"></a>代码自取</h2><p><a href="https://github.com/XYCode-Kerman/realofbilibili">RealOFBilibili</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> bilibili </tag>
+            
+            <tag> 艺画开天 </tag>
+            
+            <tag> 塔博里茨斯基 </tag>
+            
+            <tag> 神圣俄罗斯帝国 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>与净网联盟的斗争</title>
+      <link href="/posts/4f6.html"/>
+      <url>/posts/4f6.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>起因这方面其实没啥可以说的，和大多数人一样，无非就是有点正义感，想为社会做点贡献罢了。</p><h1 id="2020-ICE服事件"><a href="#2020-ICE服事件" class="headerlink" title="2020 ICE服事件"></a>2020 ICE服事件</h1><p>我第一次了解净网联盟是在所谓的<strong>ICE服务器被炸</strong>事件，这里给没听过的朋友们讲一下：著名B站UP<a href="https://space.bilibili.com/490670548">Minecraft ICE</a>自己开了一个网易我的世界租赁服，该服务器的主城、小游戏、生存等玩法均由该up和小伙伴们搭建，算得上是一件精美的“艺术品“。而这样一个费尽大家心血搭建起来的服务器却在某一天遭到恶意爆破，服务器主城被破坏，基岩、浮空方块遍地都是，还有破坏者专门为了干扰修复所放置的流体方块和卡服设备。</p><p>此次事件震惊整个MC圈，无数人为炸图者无耻的行为而生气，在网络上四处寻找着炸图者，试图<strong>替天行道    为ICE报仇</strong>，而不少营销号正蠢蠢欲动，准备利用<em>非理智MC玩家</em>的愤怒情绪大赚一笔</p><h2 id="喵喵"><a href="#喵喵" class="headerlink" title="喵喵"></a>喵喵</h2><p>就在大家群情悲愤的时候，出现了一个叫做”迷你世界搜索喵喵”的人，他宣称是自己炸了ICE的服务器，而他的造假手法拙劣到极致，无非就是通过几张伪造的截图，再加上网络上所谓目击者们的煽风点火，无数人涌入喵喵视频的评论区，对其进行各种辱骂。<br>喵喵的作弊手法漏洞百出，证据如下：</p><ol><li>迷你世界搜索靠的是迷你号而非名称，仅此迷你世界搜索喵喵这个昵称，没有任何意义。</li><li>其开庭的照片也是漏洞百出，首先游戏玩家互相爆破对方服务器的行为并不构成民事或刑事上的违法犯罪，因此没有开庭的必要，其没有造成直接的财产损失，就算有损失，也是<strong>极小</strong>的（ICE事后调去取了备份）</li></ol><h2 id="净网联盟"><a href="#净网联盟" class="headerlink" title="净网联盟"></a>净网联盟</h2><p>同一时间所谓的净化网络联盟也宣布对此次事件负责，这算是净化网络联盟第一次出现在了公众视野。<br>自此MC玩家当中分成了三派，一派认为是<strong>喵喵所炸的服务器</strong>，第二派认为是<strong>净网联盟炸了服务器</strong>，第三派认为<strong>喵喵是净网联盟的成员</strong>，此次事件是他们<strong>合谋</strong>。</p><h1 id="黑漫事件"><a href="#黑漫事件" class="headerlink" title="黑漫事件"></a>黑漫事件</h1><blockquote><p>请注意区分下文中所提到的“黑漫君”和“黑芒君”</p></blockquote><p>黑漫君是一名我的世界UP主，其目前正在读高中，该事件发生时，黑漫君正在准备中考。</p><p>2020年突如其来的疫情席卷了全国，全国都封了城，学生们都在上网课。<br>自ICE服被炸之后，黑漫君开的服务器也同样被炸，而与ICE不同，黑漫君没有沉默，而是主动声明自己的服务器确实遭到轰炸了，但是也希望大家不要去爆破迷你世界玩家的地图，每一个地图都是玩家们的心血，而正是这条在正常人看来极其正确的视频，却遭到了MC不理智玩家们的辱骂。</p><p>这些玩家们认为黑漫君是所谓的叛徒，是MC的耻辱，自己的服务器被炸了，第一时间不是去找别人报仇，而是忍气吞声，他们不顾劝告，执意去轰炸迷你世界玩家们的地图，并认为这是<strong>正义之举</strong>。</p><p>在黑漫发表声明后的一个星期之内，出现了一名名为黑芒君的我的世界up主，但说他是我的世界up主其实也未免太过抬举他了。<br>黑芒所发布的视频多为直播轰炸迷你世界玩家地图的录播，而就是这样一个败坏MC名声的人，却遭到了这些不理智玩家们的拥戴。<br>半个月之后黑漫又发表了一则声明，说明自己被人人肉搜索，具体搜索的人不得而知，只知道该人宣称能看到黑漫君正在上网课的画面，并且得到了他的身份证信息，但可以确认的一点是，该人是<strong>净网联盟的成员</strong></p><p>接下来的剧情大家自然十分熟悉，所以略过。</p><p><a href="https://www.bilibili.com/video/BV11C4y147Gh/">黑漫君发表声明的原视频</a> <a href="https://www.bilibili.com/video/BV1Mc411h7AZ/">黑漫君称被净网联盟网暴</a></p><h1 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h1><p>我与净网联盟的斗争是从<strong>2020</strong>年开始的，当时我也是看不惯他们卑劣的行径，但那时候的我也没什么能力，所以收效甚微，做了一两个月就没怎么做了，主要发了些视频展示他们干的坏事（但是总被限流）（悲）。</p><p><strong>2022</strong>年的11月左右，我做了<a href="http://clean.www.xycode.club">净网联盟证据展示</a>这个站，收到了大家提供的许多证据，在此为所有向我提供证据的网友们做出衷心的感谢！这个站说是我自己做的，其实不如说是和大家一起努力做的！</p><h1 id="技术细节"><a href="#技术细节" class="headerlink" title="技术细节"></a>技术细节</h1><p>净网证据展示这个站的服务端是nginx，采用kubernetes（我内网有两台Linux机器）对其进行调度，可以做到负载均衡，使用frpc将master节点映射到公网（联通不给我公网IPV4，悲）。。。</p><h1 id="最后一提"><a href="#最后一提" class="headerlink" title="最后一提"></a>最后一提</h1><p>如果您掌握了新的证据，请发邮件到<strong>xycode-xyc@outlook.com</strong>，你可以点击这里进行发送 <a href="mailto:xycode-xyc@outlook.com">XYCode的邮箱</a></p><p>所有证据均采用OneDrive（微软的同步盘）+Rsync（内网同步）+Cryptomator（加密软件）进行保存，目前我已经联系上了<a href="https://archive.org">互联网映像馆</a>（大陆没法访问）对我的网站进行镜像，净网证据展示这个站我正在做改版，将来会使用Cloudflare Pages的服务。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 调查向 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 违法犯罪 </tag>
+            
+            <tag> bilibili </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/posts/3cef.html"/>
+      <url>/posts/3cef.html</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
+</search>
