@@ -4,6 +4,68 @@
   
     
     <entry>
+      <title>从0开始配置你的manjaro! -- i3wm的美化</title>
+      <link href="/posts/ccc1.html"/>
+      <url>/posts/ccc1.html</url>
+      
+        <content type="html"><![CDATA[<p><strong>W</strong>ork <strong>I</strong>n <strong>P</strong>rogress</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 从0开始配置你的manjaro </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> manjaro </tag>
+            
+            <tag> linux </tag>
+            
+            <tag> 高效 </tag>
+            
+            <tag> i3wm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>从0开始配置你的manjaro! -- i3wm的安装</title>
+      <link href="/posts/a7cc.html"/>
+      <url>/posts/a7cc.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote><p>推荐使用<strong>aria2c</strong>+<strong>torrent</strong>的方式下载manjaro镜像，cdn77的速度太慢了。</p><p>推荐直接下载i3wm的镜像，中文渲染问题我后面会一步一步带你解决。</p></blockquote><h1 id="安装manjaro"><a href="#安装manjaro" class="headerlink" title="安装manjaro"></a>安装manjaro</h1><p><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301072113650.png" alt="image-20230107211351234"></p><p>在该界面设置好相关配置，推荐从闭源驱动启动，更加稳定。</p><p><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301072115926.png" alt="image-20230107211529609"></p><p>设置好后应该如上图所示，开源/闭源驱动看个人需求选择，我这里就用闭源驱动启动了。</p><p>启动后你应该能看到manjaro hello这一程序，点击上面的<strong>Launch installer</strong>按钮以进行安装。</p><blockquote><p>如果出现中文渲染问题，你应当执行如下命令：</p><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman-mirrors -c China</span><br><span class="line">sudo pacman -Sy wqy-zenhei</span><br></pre></td></tr></table></figure></p></blockquote><p>安装时会让你选择<strong>引导驱动器</strong>和<strong>交换分区</strong>，如果你的目标磁盘大于<strong>30GB</strong>，请果断选择<strong>带休眠的交换分区</strong>，否则请选择<strong>不带休眠的交换分区</strong>，也可以选择<strong>交换到文件</strong>，但交换分区是必须的！</p><p>如果你试图将manjaro作为<strong>第二个系统</strong>安装，请将引导程序安装到一个<strong>与原系统不同的磁盘</strong>，以免manjaro引导程序（grub）覆盖掉原系统的引导程序！</p><blockquote><p>当原系统的引导程序被覆盖，你<strong>几乎不可能</strong>再次恢复其的引导程序，如果是Linux系统，可以在manjaro的grub中新增一个菜单，而Windows几乎不存在恢复可能！</p></blockquote><p><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301072148608.png" alt="image-20230107214847098"></p><p>推荐<strong>为管理员(root)使用同样的密码</strong>。OFFICE套件可以选择安装，无必要不推荐安装（大不了用网页版Office365）。</p><p><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301072151144.png" alt="image-20230107215050464"></p><p>在<em>摘要</em>界面点击安装后，manjaro将会进行安装，该过程是<strong>不可逆</strong>的，请谨慎操作！</p><p><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301072157996.png" alt="image-20230107215755848"></p><p>出现如上界面，即代表安装完成，你可以在命令行中输入<code>reboot</code>或点击<code>现在重启</code>，并拔出你的安装介质（如<code>USB</code>、<code>光盘</code>）。</p><p>当出现如下界面，即代表你已经进入了manjaro，输入密码并按下回车即可登录。</p><p><img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301072206358.png" alt="image-20230107220652875"></p><blockquote><p>恭喜你，你已经成功安装了manjaro和i3-wm（以及一个lightdm），在下一章中，我们将讲解如何美化你的i3-wm和shell！</p><p>如果依然有中文渲染问题，请执行前面提到的代码！</p></blockquote><h1 id="附件"><a href="#附件" class="headerlink" title="附件"></a>附件</h1><h2 id="I3WM默认常用键位"><a href="#I3WM默认常用键位" class="headerlink" title="I3WM默认常用键位"></a>I3WM默认常用键位</h2><div class="table-container"><table><thead><tr><th style="text-align:center"><strong>键位</strong></th><th style="text-align:center"><strong>操作</strong></th></tr></thead><tbody><tr><td style="text-align:center">Mod + Enter</td><td style="text-align:center">打开终端</td></tr><tr><td style="text-align:center">Mod + Shift + Q</td><td style="text-align:center">关闭当前窗口</td></tr><tr><td style="text-align:center">Mod + 上/下/左/右</td><td style="text-align:center">移动焦点</td></tr><tr><td style="text-align:center">Mod + 数字键</td><td style="text-align:center">切换工作区</td></tr><tr><td style="text-align:center">Mod + Shift + 数字键</td><td style="text-align:center">将焦点上的窗口移动到对应工作区</td></tr><tr><td style="text-align:center">Mod + D</td><td style="text-align:center">打开dmenu（应用菜单）</td></tr></tbody></table></div><blockquote><p>Mod键一般为<strong>Windows徽标键</strong>，少数为<strong>Alt</strong>键。</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 从0开始配置你的manjaro </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> manjaro </tag>
+            
+            <tag> linux </tag>
+            
+            <tag> 高效 </tag>
+            
+            <tag> i3wm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>当你计算出了&lt;&lt;三体&gt;&gt;的真实评分</title>
       <link href="/posts/d7d9.html"/>
       <url>/posts/d7d9.html</url>
