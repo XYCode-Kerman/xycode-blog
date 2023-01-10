@@ -110,20 +110,6 @@
 
   
   <url>
-    <loc>https://www.xycode.club/tags/%E8%BF%9D%E6%B3%95%E7%8A%AF%E7%BD%AA/</loc>
-    <lastmod>2023-01-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.xycode.club/tags/bilibili/</loc>
-    <lastmod>2023-01-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.xycode.club/tags/manjaro/</loc>
     <lastmod>2023-01-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -146,6 +132,20 @@
   
   <url>
     <loc>https://www.xycode.club/tags/i3wm/</loc>
+    <lastmod>2023-01-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.xycode.club/tags/%E8%BF%9D%E6%B3%95%E7%8A%AF%E7%BD%AA/</loc>
+    <lastmod>2023-01-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.xycode.club/tags/bilibili/</loc>
     <lastmod>2023-01-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -175,14 +175,14 @@
 
   
   <url>
-    <loc>https://www.xycode.club/categories/%E8%B0%83%E6%9F%A5%E5%90%91/</loc>
+    <loc>https://www.xycode.club/categories/%E4%BB%8E0%E5%BC%80%E5%A7%8B%E9%85%8D%E7%BD%AE%E4%BD%A0%E7%9A%84manjaro/</loc>
     <lastmod>2023-01-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.xycode.club/categories/%E4%BB%8E0%E5%BC%80%E5%A7%8B%E9%85%8D%E7%BD%AE%E4%BD%A0%E7%9A%84manjaro/</loc>
+    <loc>https://www.xycode.club/categories/%E8%B0%83%E6%9F%A5%E5%90%91/</loc>
     <lastmod>2023-01-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
