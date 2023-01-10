@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>从0开始配置你的manjaro! -- 高效开发</title>
+      <link href="/posts/913e.html"/>
+      <url>/posts/913e.html</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>上文：<a href="/posts/ccc1.html" title="从0开始配置你的manjaro! -- i3wm的美化">从0开始配置你的manjaro! -- i3wm的美化</a></p></blockquote><h1 id="archlinuxcn"><a href="#archlinuxcn" class="headerlink" title="archlinuxcn"></a>archlinuxcn</h1><p><code>archlinuxcn</code>是一个由社区维护的软件库，该库中包含许多在<code>aur</code>中的软件，免去编译的过程，<strong>清华大学镜像站</strong>有该软件库的镜像，可以高速下载。安装方法如下</p><ol><li>使用vim打开<code>/etc/pacman.conf</code>：<code>sudo vim /etc/pacman.conf</code></li><li>在末尾新增如下行：</li></ol><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[archlinuxcn]</span><br><span class="line">Server = https://mirror.tuna.tsinghua.edu.cn/archlinuxcn/<span class="variable">$arch</span></span><br></pre></td></tr></table></figure></p><p>然后输入<code>pacman -Sy archlinuxcn-keyring</code>即可正常使用<code>archlinuxcn</code>。以下是archlinuxcn中的常用软件。</p><ol><li>yay：aur包管理器，命令格式与<code>pacman</code>相同，无需在root下运行</li><li>timeshift：备份系统用的</li><li>microsoft-edge-stable-bin：微软的Edge浏览器</li></ol><blockquote><p>推荐在任何情况下都优先使用<code>yay</code>安装软件，<code>yay</code>会在无法在<code>aur</code>中找到软件包时自动调用<code>pacman</code>安装。</p></blockquote><h1 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h1><p>manjaro自带了zsh，使用<code>chsh</code>即可切换。（输入的密码不会显示）</p><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ chsh</span><br><span class="line">正在更改 xycode 的 shell。</span><br><span class="line">密码：</span><br><span class="line">新 shell [/usr/bin/bash]: /usr/bin/zsh</span><br></pre></td></tr></table></figure></p><h1 id="ranger"><a href="#ranger" class="headerlink" title="ranger"></a>ranger</h1><p>ranger是一个Linux下的纯命令行文件管理器，在xorg环境下，ranger甚至可以在终端渲染出图片。<img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301091953031.png" alt="image-20230109195355282"></p><p>输入以下命令安装</p><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -Sy ranger</span><br></pre></td></tr></table></figure></p><p>我推荐你用一个短命令来代替<code>ranger</code>这一命令，你可以通过在<code>.zshrc</code>或<code>.bashrc</code><sup><a href="#fn_1" id="reffn_1">1</a></sup>当中新增这样一段命令来实现</p><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">alias</span> ra=ranger</span><br></pre></td></tr></table></figure></p><p>执行该命令后，在shell中，<code>ra</code>将和<code>ranger</code>等价。（需要重新打开一个zsh终端）</p><blockquote id="fn_1"><sup>1</sup>. <code>.zshrc</code>是zsh在启动时执行的一段脚本，<code>.bashrc</code>同理，其格式与正常的终端命令相同！<a href="#reffn_1" title="Jump back to footnote [1] in the text."> &#8617;</a></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 从0开始配置你的manjaro </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> manjaro </tag>
+            
+            <tag> linux </tag>
+            
+            <tag> 高效 </tag>
+            
+            <tag> i3wm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>从0开始配置你的manjaro! -- i3wm的美化</title>
       <link href="/posts/ccc1.html"/>
       <url>/posts/ccc1.html</url>
