@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><meta name="msvalidate.01" content="310F5D03A41682C029288FB91A6A588F"><title>如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设 | XYCode's Blog</title><meta name="author" content="XYCode"><meta name="copyright" content="XYCode"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言下文当中，请注意区分服务器（物理）和服务器（逻辑）以及服务器（游戏），物理服务器指的是安装了Linux、Windows Server的可以长时间保持开启的主机，物理服务器的显卡不是必须的，但建议装上一块（带核显的就不用了），这样方便你在无法连接到ssh的时候排除故障。 逻辑服务器指的是在物理服务器上通过虚拟化软件创建的虚拟机，运行着独立于物理服务器的操作系统 ，整体与物理服务器相互隔离。 游戏">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设">
+<meta property="og:url" content="https://www.xycode.club/posts/3733.html">
+<meta property="og:site_name" content="XYCode&#39;s Blog">
+<meta property="og:description" content="前言下文当中，请注意区分服务器（物理）和服务器（逻辑）以及服务器（游戏），物理服务器指的是安装了Linux、Windows Server的可以长时间保持开启的主机，物理服务器的显卡不是必须的，但建议装上一块（带核显的就不用了），这样方便你在无法连接到ssh的时候排除故障。 逻辑服务器指的是在物理服务器上通过虚拟化软件创建的虚拟机，运行着独立于物理服务器的操作系统 ，整体与物理服务器相互隔离。 游戏">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301251422000.jpg">
+<meta property="article:published_time" content="2023-01-25T06:09:11.000Z">
+<meta property="article:modified_time" content="2023-01-29T07:03:26.375Z">
+<meta property="article:author" content="XYCode">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="Minecraft">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301251422000.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.xycode.club/posts/3733"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?dc429c325ac012cfea1c389850b9822e";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-29 15:03:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i0.hdslb.com/bfs/album/ffdb7c52ddbc3d5eddde97172171d5e7f46bcd03.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/images/"><i class="fa-fw fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301251422000.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">XYCode's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/images/"><i class="fa-fw fa-fw fas fa-images"></i><span> 图库</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-25T06:09:11.000Z" title="发表于 2023-01-25 14:09:11">2023-01-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-29T07:03:26.375Z" title="更新于 2023-01-29 15:03:26">2023-01-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/">技术向</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%90%91/%E6%B8%B8%E6%88%8F/">游戏</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>下文当中，请注意区分<strong>服务器（物理）</strong>和<strong>服务器（逻辑）</strong>以及<strong>服务器（游戏）</strong>，物理服务器指的是安装了Linux、Windows Server的可以长时间保持开启的主机，物理服务器的显卡不是必须的，但建议装上一块（带核显的就不用了），这样方便你在无法连接到ssh的时候排除故障。</p>
+<p>逻辑服务器指的是在物理服务器上通过虚拟化软件创建的虚拟机，运行着独立于物理服务器的操作系统 ，整体与物理服务器相互隔离。</p>
+<p>游戏服务器指的是在<strong>物理服务器</strong>或<strong>逻辑服务器</strong>上由<strong>游戏服务端软件</strong>运行的，游戏服务器会通过操作系统访问物理/逻辑服务器的<strong>硬盘、内存、网络（IP和端口）资源</strong>，所以请确保你的服务器内存满足如下条件：</p>
+<script type="math/tex; mode=display">
+RAM\leq2G</script><p>否则因为内存不够导致服务器开不起来别找我。</p>
+<p>当服务端软件运行后，会在你的物理、逻辑服务器上监听一个端口，Java默认为25565，默认绑定到0.0.0.0这个IP上。</p>
+<p>阅读本文前，请确保你会使用Linux操作系统。</p>
+<blockquote>
+<p>0.0.0.0代表计算机上所有可用的IP，127.0.0.1为回环地址，代表本机，一般的操作系统会把localhost这个域名解析到127.0.0.1。</p>
+</blockquote>
+<h1 id="互通原理解释"><a href="#互通原理解释" class="headerlink" title="互通原理解释"></a>互通原理解释</h1><p>首先要明白的是，Socket通信主要有两种方式，UDP和TCP，基岩版使用的是UDP协议，Java版使用的是TCP协议。</p>
+<p>除了在通信协议上不同，它们的报文内容也不相同，不能简单的将TCP转为UDP。因此我们需要插件来帮助我们。</p>
+<h1 id="Java服务器"><a href="#Java服务器" class="headerlink" title="Java服务器"></a>Java服务器</h1><h2 id="服务端选择"><a href="#服务端选择" class="headerlink" title="服务端选择"></a>服务端选择</h2><p>根据你的需求选择相应的服务端：</p>
+<ol>
+<li><p>插件端</p>
+<ol>
+<li>Spigot：老牌服务端，优化强，插件多，基于Bukkit</li>
+<li>PaperSpigot：新服务端，优化更强，支持大部分Spigot插件。</li>
+<li>CraftBukkit：老服务端，不推荐。</li>
+</ol>
+</li>
+<li><p>Mod端</p>
+<ol>
+<li>Fabric端：支持所有Fabric模组<ol>
+<li>Carpet端：红石玩家专用，针对红石专门优化</li>
+</ol>
+</li>
+<li>Forge端：支持所有Forge模组</li>
+</ol>
+</li>
+<li><p>兼容端</p>
+<ol>
+<li>CatServer：同时兼容Forge模组和Spigot插件（该服务端更新不稳定，且作者素质有问题）</li>
+<li>Mohist：同时兼容Forge模组和Spigot插件。（更新频繁）</li>
+<li>Sponge：同时支持部分Forge模组和Spigot插件。</li>
+</ol>
+</li>
+<li><p>奇怪的服务端？</p>
+<ol>
+<li>Akrain：一款多线程的MC服务端，发挥多核CPU的优势，且直接基于Spigot，支持大部分Spigot插件。</li>
+<li>CubeRite：历史上最快的MC服务端，最高支持1.12，采用C++重写，没有插件生态。</li>
+<li>Hose：基于Spigot，多线程，停更。</li>
+</ol>
+</li>
+<li><p>群组服</p>
+<ol>
+<li>BungeeCord：Spigot团队开发，有独立插件生态，可以</li>
+</ol>
+<p>说了这么多相信大家知道选哪一个了吧，顺便一提，我这里将<strong>Forge、Fabric、Carpet</strong>称为服务端是不准确的，<strong>Forge、Fabric</strong>是模组加载器和API，<strong>Carpet</strong>则是一个模组。</p>
+<h2 id="服务端编译（仅针对Spigot）"><a href="#服务端编译（仅针对Spigot）" class="headerlink" title="服务端编译（仅针对Spigot）"></a>服务端编译（仅针对Spigot）</h2></li>
+</ol>
+<p>Spigot团队应该是害怕MOJANG的律师函，所以没放出编译好的版本，你要自己去下载编译工具。（谁编译的谁承担法律责任，ffmpeg就是这样的）</p>
+<p>请使用以下命令下载并编译：</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /tmp/spigot_build</span><br><span class="line"><span class="built_in">cd</span> /tmp/spigot_build</span><br><span class="line">wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar</span><br><span class="line">java -jar BuildTools.jar --rev &lt;游戏版本&gt;</span><br></pre></td></tr></table></figure>
+</p>
+<p>编译完成后会在当前文件夹产生一个名为<code>spigot-&lt;游戏版本&gt;.jar</code>的文件，这就是服务端，请将其复制到<code>/tmp</code>以外的任何地方！！！</p>
+<blockquote>
+<p>/tmp下的所有文件重启后就会消失 </p>
+</blockquote>
+<h2 id="Launch"><a href="#Launch" class="headerlink" title="Launch!!!"></a>Launch!!!</h2><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> server=<span class="string">&quot;./spigot-&lt;版本&gt;.jar&quot;</span></span><br><span class="line">java -jar <span class="variable">$server</span> nogui</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;eula=true&quot;</span> &gt; eula.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;java -jar <span class="variable">$server</span> nogui&quot;</span> &gt; start.sh</span><br><span class="line"><span class="built_in">chmod</span> +x ./start.sh</span><br><span class="line">./start.sh</span><br></pre></td></tr></table></figure>
+</p>
+<p>以后只需要执行<code>./start.sh</code>就可以启动服务器了。</p>
+<blockquote>
+<p>Tips：你可以通过GNU Screen来让服务器保持在后台运行（不推荐nohup,因为你无法和nohup交互）</p>
+<p>screen -ls # 展示所有运行中的终端</p>
+<p>screen -r # 恢复终端（只有一个终端运行时）</p>
+<p>screen -r <pid></p>
+<p>screen表示用<code>&lt;pid&gt;.&lt;id&gt;.&lt;host&gt;</code>来标识终端。</p>
+</blockquote>
+<h1 id="互通"><a href="#互通" class="headerlink" title="互通"></a>互通</h1><h2 id="Geyser"><a href="#Geyser" class="headerlink" title="Geyser"></a>Geyser</h2><p>我们可以用geyser来实现互通，我们在<a target="_blank" rel="noopener" href="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/">GeyserCI</a>上可以看到构建结果，根据你的服务端下载对应版本的Geyser插件。<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301291438334.png" alt="image-20230129143822479"></p>
+<p>如果你的服务端不包括在其中（例如原生服务端），可以下载Standalone，然后单独放到一个文件夹中运行。</p>
+<p>我们推荐在安装Geyser时同时安装FloodGate，为基岩版玩家提供更好的游戏体验。</p>
+<p>群组服只需要BC端安装Geyser就行了，其他则服需要安装floodgate，并保持<code>config.yml</code>和<code>key.pem</code>同步，否则基岩版玩家无法正常转服。</p>
+<p><a target="_blank" rel="noopener" href="https://geyser.superiormc.cn/user-guide/li-jie-pei-zhi">Geyser 配置参考</a></p>
+<h3 id="FloodGate"><a href="#FloodGate" class="headerlink" title="FloodGate"></a>FloodGate</h3><p>FloodGate是和Geyser配套的产品，需要作为插件安装。</p>
+<blockquote>
+<p><strong>你只需在使用独立版上进行此步骤：</strong></p>
+<ul>
+<li><em>复制</em> <strong>Floodgate</strong> 配置所在的目录下的 <code>key.pem</code> 文件到 <strong>Geyser独立版</strong> 的文件夹内。<strong>不要尝试将这个文件分享给其他人！</strong>这个密钥文件允许基岩版账号绕过 Java 版身份验证，如果有人拿到了它，他们可能会对您的服务器造成严重破坏</li>
+</ul>
+<p><strong>你只需要在群组服中执行以下步骤</strong>：</p>
+<p>保持<code>key.pem</code>在所有子服务器中同步！</p>
+<p>可以通过软连接达成这一点：</p>
+<p>ln -s <bungeecord/plugins/floodgate> <server/plugins/floodgate></p>
+<p>其中的第一个参数替换为bungeecord服的floodgate的配置文件夹路径，第二个参数替换为子服务器的floodgate配置文件夹路径，依次类推，为所有子服务器进行软链接。</p>
+</blockquote>
+<p>FloodGate让基岩版玩家拥有更好的游戏体验，包括但不限于：</p>
+<ol>
+<li>皮肤同步</li>
+<li>让一些插件适配基岩版的UI界面</li>
+<li>允许名字中含有特殊符号的玩家进入</li>
+<li>命令优化</li>
+</ol>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><blockquote>
+<p>Q：基岩版玩家登入要求正版验证怎么办？</p>
+<p>A：安装FloodGate。</p>
+<p>Q：Java版皮肤不显示</p>
+<p>A：关闭正版验证的情况下，正版和非正版玩家都不会显示皮肤，可以通过安装<code>skinsrestorer</code>插件解决。</p>
+</blockquote>
+<p>下一期我们来讲一讲如何配置权限插件。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://www.xycode.club">XYCode</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.xycode.club/posts/3733.html">https://www.xycode.club/posts/3733.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.xycode.club" target="_blank">XYCode's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/Minecraft/">Minecraft</a></div><div class="post_share"><div class="social-share" data-image="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301251422000.jpg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/posts/3cef.html"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images88319413_p0.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hello World</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i0.hdslb.com/bfs/album/ffdb7c52ddbc3d5eddde97172171d5e7f46bcd03.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">XYCode</div><div class="author-info__description">一个Linux用户的随笔</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/XYCode-Kerman"><i class="fab fa-github"></i><span>我的Github</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XYCode-Kerman" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xycode-xyc@outlook.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/438812505" target="_blank" title="Bilibili"><i class="fa fa-user"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">是那个做“净网证据展示”的UP主哦</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%92%E9%80%9A%E5%8E%9F%E7%90%86%E8%A7%A3%E9%87%8A"><span class="toc-number">2.</span> <span class="toc-text">互通原理解释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">Java服务器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%80%89%E6%8B%A9"><span class="toc-number">3.1.</span> <span class="toc-text">服务端选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%BC%96%E8%AF%91%EF%BC%88%E4%BB%85%E9%92%88%E5%AF%B9Spigot%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">服务端编译（仅针对Spigot）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Launch"><span class="toc-number">3.3.</span> <span class="toc-text">Launch!!!</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%92%E9%80%9A"><span class="toc-number">4.</span> <span class="toc-text">互通</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Geyser"><span class="toc-number">4.1.</span> <span class="toc-text">Geyser</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#FloodGate"><span class="toc-number">4.1.1.</span> <span class="toc-text">FloodGate</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">4.2.</span> <span class="toc-text">常见问题</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/3733.html" title="如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301251422000.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设"/></a><div class="content"><a class="title" href="/posts/3733.html" title="如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设">如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设</a><time datetime="2023-01-25T06:09:11.000Z" title="发表于 2023-01-25 14:09:11">2023-01-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/3cef.html" title="Hello World"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images88319413_p0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hello World"/></a><div class="content"><a class="title" href="/posts/3cef.html" title="Hello World">Hello World</a><time datetime="2023-01-24T05:56:03.958Z" title="发表于 2023-01-24 13:56:03">2023-01-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/a42e.html" title="从0开始配置你的manjaro! -- picom配置"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301232233040.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从0开始配置你的manjaro! -- picom配置"/></a><div class="content"><a class="title" href="/posts/a42e.html" title="从0开始配置你的manjaro! -- picom配置">从0开始配置你的manjaro! -- picom配置</a><time datetime="2023-01-23T13:46:42.000Z" title="发表于 2023-01-23 21:46:42">2023-01-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/913e.html" title="从0开始配置你的manjaro! -- 高效开发"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301091941914.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从0开始配置你的manjaro! -- 高效开发"/></a><div class="content"><a class="title" href="/posts/913e.html" title="从0开始配置你的manjaro! -- 高效开发">从0开始配置你的manjaro! -- 高效开发</a><time datetime="2023-01-09T11:38:13.000Z" title="发表于 2023-01-09 19:38:13">2023-01-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/ccc1.html" title="从0开始配置你的manjaro! -- i3wm的美化"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301072242526.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="从0开始配置你的manjaro! -- i3wm的美化"/></a><div class="content"><a class="title" href="/posts/ccc1.html" title="从0开始配置你的manjaro! -- i3wm的美化">从0开始配置你的manjaro! -- i3wm的美化</a><time datetime="2023-01-08T05:00:00.000Z" title="发表于 2023-01-08 13:00:00">2023-01-08</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301251422000.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By XYCode</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><a href="https://icp.gov.moe/?keyword=20231233" target="_blank">萌ICP备20231233号</a></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

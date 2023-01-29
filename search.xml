@@ -4,6 +4,48 @@
   
     
     <entry>
+      <title>如何开一个java、基岩互通的我的世界服务器——服务端选择与初步架设</title>
+      <link href="/posts/3733.html"/>
+      <url>/posts/3733.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>下文当中，请注意区分<strong>服务器（物理）</strong>和<strong>服务器（逻辑）</strong>以及<strong>服务器（游戏）</strong>，物理服务器指的是安装了Linux、Windows Server的可以长时间保持开启的主机，物理服务器的显卡不是必须的，但建议装上一块（带核显的就不用了），这样方便你在无法连接到ssh的时候排除故障。</p><p>逻辑服务器指的是在物理服务器上通过虚拟化软件创建的虚拟机，运行着独立于物理服务器的操作系统 ，整体与物理服务器相互隔离。</p><p>游戏服务器指的是在<strong>物理服务器</strong>或<strong>逻辑服务器</strong>上由<strong>游戏服务端软件</strong>运行的，游戏服务器会通过操作系统访问物理/逻辑服务器的<strong>硬盘、内存、网络（IP和端口）资源</strong>，所以请确保你的服务器内存满足如下条件：</p><script type="math/tex; mode=display">RAM\leq2G</script><p>否则因为内存不够导致服务器开不起来别找我。</p><p>当服务端软件运行后，会在你的物理、逻辑服务器上监听一个端口，Java默认为25565，默认绑定到0.0.0.0这个IP上。</p><p>阅读本文前，请确保你会使用Linux操作系统。</p><blockquote><p>0.0.0.0代表计算机上所有可用的IP，127.0.0.1为回环地址，代表本机，一般的操作系统会把localhost这个域名解析到127.0.0.1。</p></blockquote><h1 id="互通原理解释"><a href="#互通原理解释" class="headerlink" title="互通原理解释"></a>互通原理解释</h1><p>首先要明白的是，Socket通信主要有两种方式，UDP和TCP，基岩版使用的是UDP协议，Java版使用的是TCP协议。</p><p>除了在通信协议上不同，它们的报文内容也不相同，不能简单的将TCP转为UDP。因此我们需要插件来帮助我们。</p><h1 id="Java服务器"><a href="#Java服务器" class="headerlink" title="Java服务器"></a>Java服务器</h1><h2 id="服务端选择"><a href="#服务端选择" class="headerlink" title="服务端选择"></a>服务端选择</h2><p>根据你的需求选择相应的服务端：</p><ol><li><p>插件端</p><ol><li>Spigot：老牌服务端，优化强，插件多，基于Bukkit</li><li>PaperSpigot：新服务端，优化更强，支持大部分Spigot插件。</li><li>CraftBukkit：老服务端，不推荐。</li></ol></li><li><p>Mod端</p><ol><li>Fabric端：支持所有Fabric模组<ol><li>Carpet端：红石玩家专用，针对红石专门优化</li></ol></li><li>Forge端：支持所有Forge模组</li></ol></li><li><p>兼容端</p><ol><li>CatServer：同时兼容Forge模组和Spigot插件（该服务端更新不稳定，且作者素质有问题）</li><li>Mohist：同时兼容Forge模组和Spigot插件。（更新频繁）</li><li>Sponge：同时支持部分Forge模组和Spigot插件。</li></ol></li><li><p>奇怪的服务端？</p><ol><li>Akrain：一款多线程的MC服务端，发挥多核CPU的优势，且直接基于Spigot，支持大部分Spigot插件。</li><li>CubeRite：历史上最快的MC服务端，最高支持1.12，采用C++重写，没有插件生态。</li><li>Hose：基于Spigot，多线程，停更。</li></ol></li><li><p>群组服</p><ol><li>BungeeCord：Spigot团队开发，有独立插件生态，可以</li></ol><p>说了这么多相信大家知道选哪一个了吧，顺便一提，我这里将<strong>Forge、Fabric、Carpet</strong>称为服务端是不准确的，<strong>Forge、Fabric</strong>是模组加载器和API，<strong>Carpet</strong>则是一个模组。</p><h2 id="服务端编译（仅针对Spigot）"><a href="#服务端编译（仅针对Spigot）" class="headerlink" title="服务端编译（仅针对Spigot）"></a>服务端编译（仅针对Spigot）</h2></li></ol><p>Spigot团队应该是害怕MOJANG的律师函，所以没放出编译好的版本，你要自己去下载编译工具。（谁编译的谁承担法律责任，ffmpeg就是这样的）</p><p>请使用以下命令下载并编译：</p><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> /tmp/spigot_build</span><br><span class="line"><span class="built_in">cd</span> /tmp/spigot_build</span><br><span class="line">wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar</span><br><span class="line">java -jar BuildTools.jar --rev &lt;游戏版本&gt;</span><br></pre></td></tr></table></figure></p><p>编译完成后会在当前文件夹产生一个名为<code>spigot-&lt;游戏版本&gt;.jar</code>的文件，这就是服务端，请将其复制到<code>/tmp</code>以外的任何地方！！！</p><blockquote><p>/tmp下的所有文件重启后就会消失 </p></blockquote><h2 id="Launch"><a href="#Launch" class="headerlink" title="Launch!!!"></a>Launch!!!</h2><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> server=<span class="string">&quot;./spigot-&lt;版本&gt;.jar&quot;</span></span><br><span class="line">java -jar <span class="variable">$server</span> nogui</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;eula=true&quot;</span> &gt; eula.txt</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;java -jar <span class="variable">$server</span> nogui&quot;</span> &gt; start.sh</span><br><span class="line"><span class="built_in">chmod</span> +x ./start.sh</span><br><span class="line">./start.sh</span><br></pre></td></tr></table></figure></p><p>以后只需要执行<code>./start.sh</code>就可以启动服务器了。</p><blockquote><p>Tips：你可以通过GNU Screen来让服务器保持在后台运行（不推荐nohup,因为你无法和nohup交互）</p><p>screen -ls # 展示所有运行中的终端</p><p>screen -r # 恢复终端（只有一个终端运行时）</p><p>screen -r <pid></p><p>screen表示用<code>&lt;pid&gt;.&lt;id&gt;.&lt;host&gt;</code>来标识终端。</p></blockquote><h1 id="互通"><a href="#互通" class="headerlink" title="互通"></a>互通</h1><h2 id="Geyser"><a href="#Geyser" class="headerlink" title="Geyser"></a>Geyser</h2><p>我们可以用geyser来实现互通，我们在<a href="https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/">GeyserCI</a>上可以看到构建结果，根据你的服务端下载对应版本的Geyser插件。<img src="https://global-image-bed-1302614822.cos.ap-nanjing.myqcloud.com/images202301291438334.png" alt="image-20230129143822479"></p><p>如果你的服务端不包括在其中（例如原生服务端），可以下载Standalone，然后单独放到一个文件夹中运行。</p><p>我们推荐在安装Geyser时同时安装FloodGate，为基岩版玩家提供更好的游戏体验。</p><p>群组服只需要BC端安装Geyser就行了，其他则服需要安装floodgate，并保持<code>config.yml</code>和<code>key.pem</code>同步，否则基岩版玩家无法正常转服。</p><p><a href="https://geyser.superiormc.cn/user-guide/li-jie-pei-zhi">Geyser 配置参考</a></p><h3 id="FloodGate"><a href="#FloodGate" class="headerlink" title="FloodGate"></a>FloodGate</h3><p>FloodGate是和Geyser配套的产品，需要作为插件安装。</p><blockquote><p><strong>你只需在使用独立版上进行此步骤：</strong></p><ul><li><em>复制</em> <strong>Floodgate</strong> 配置所在的目录下的 <code>key.pem</code> 文件到 <strong>Geyser独立版</strong> 的文件夹内。<strong>不要尝试将这个文件分享给其他人！</strong>这个密钥文件允许基岩版账号绕过 Java 版身份验证，如果有人拿到了它，他们可能会对您的服务器造成严重破坏</li></ul><p><strong>你只需要在群组服中执行以下步骤</strong>：</p><p>保持<code>key.pem</code>在所有子服务器中同步！</p><p>可以通过软连接达成这一点：</p><p>ln -s <bungeecord/plugins/floodgate> <server/plugins/floodgate></p><p>其中的第一个参数替换为bungeecord服的floodgate的配置文件夹路径，第二个参数替换为子服务器的floodgate配置文件夹路径，依次类推，为所有子服务器进行软链接。</p></blockquote><p>FloodGate让基岩版玩家拥有更好的游戏体验，包括但不限于：</p><ol><li>皮肤同步</li><li>让一些插件适配基岩版的UI界面</li><li>允许名字中含有特殊符号的玩家进入</li><li>命令优化</li></ol><h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><blockquote><p>Q：基岩版玩家登入要求正版验证怎么办？</p><p>A：安装FloodGate。</p><p>Q：Java版皮肤不显示</p><p>A：关闭正版验证的情况下，正版和非正版玩家都不会显示皮肤，可以通过安装<code>skinsrestorer</code>插件解决。</p></blockquote><p>下一期我们来讲一讲如何配置权限插件。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术向 </category>
+          
+          <category> 游戏 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> Minecraft </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/posts/3cef.html"/>
+      <url>/posts/3cef.html</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>从0开始配置你的manjaro! -- picom配置</title>
       <link href="/posts/a42e.html"/>
       <url>/posts/a42e.html</url>
@@ -180,19 +222,6 @@
             <tag> bilibili </tag>
             
         </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>Hello World</title>
-      <link href="/posts/3cef.html"/>
-      <url>/posts/3cef.html</url>
-      
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-      
-      
       
     </entry>
     
